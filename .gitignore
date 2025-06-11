@@ -1,0 +1,80 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# gRPC generated files (optional - keep if you want them versioned)
+*.pb2.py
+*.pb2_grpc.py
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and debug
+*.log
+*.out
+*.err
+
+# Docker
+*.tar
+*.img
+docker-compose.override.yml
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# MkDocs site
+/site/
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+
+# GitHub Pages
+docs/_build/
+
+# Pytest
+.pytest_cache/
+
+# Secrets (you must never store secrets in Git!)
+*.env
+.env.local
+.env.*
+
+# Ignore temporary files or local builds
+*.bak
+*.tmp
+*.old
+
+# Ignore Python dev tools metadata
+pip-log.txt
+tox/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Ignore compiled WASM if applicable
+*.wasm
