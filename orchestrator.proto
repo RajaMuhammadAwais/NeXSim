@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package modern.proto;
+
+// Service definition for the Simulation Orchestrator
+service OrchestratorService {
+  // Starts a new simulation run
+  rpc StartSimulation (StartSimulationRequest) returns (StartSimulationResponse);
+
+  // Stops an ongoing simulation run
+  rpc StopSimulation (StopSimulationRequest) returns (StopSimulationResponse);
+
+  // Gets the status of a simulation run
+  rpc GetSimulationStatus (GetSimulationStatusRequest) returns (GetSimulationStatusResponse);
+}
+
+// Request to start a simulation
+message StartSimulationRequest {
+  string simulation_id = 1; // Unique ID for the simulation
+  string scenario_config = 2; // Configuration details (e.g., topology, models, parameters) - could be JSON, YAML, or path to config file
+  // Add other necessary parameters like duration, seed, etc.
+}
+
+// Response after starting a simulation
+message StartSimulationResponse {
+  string simulation_id = 1;
+  bool success = 2;
+  string message = 3; // e.g., "Simulation started successfully" or error message
+}
+
+// Request to stop a simulation
+message StopSimulationRequest {
+  string simulation_id = 1;
+}
+
+// Response after stopping a simulation
+message StopSimulationResponse {
+  string simulation_id = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+// Request to get simulation status
+message GetSimulationStatusRequest {
+  string simulation_id = 1;
+}
+
+// Response containing simulation status
+message GetSimulationStatusResponse {
+  string simulation_id = 1;
+  enum Status {
+    UNKNOWN = 0;
+    PENDING = 1;
+    RUNNING = 2;
+    COMPLETED = 3;
+    FAILED = 4;
+    STOPPED = 5;
+  }
+  Status status = 2;
+  double current_simulation_time = 3; // Current simulation time if running
+  string message = 4; // Additional status details
+}
+

@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package modern.proto;
+
+import "google/protobuf/any.proto"; // For generic event data
+import "shared_messages.proto"; // Import shared message definitions
+
+// Service definition for the Simulation Kernel
+service KernelService {
+  // Initializes a simulation instance within the kernel
+  rpc InitializeSimulation (InitializeSimulationRequest) returns (InitializeSimulationResponse);
+
+  // Executes a simulation step or runs until a certain time
+  rpc RunSimulationStep (RunSimulationStepRequest) returns (RunSimulationStepResponse);
+
+  // Sends an event to a specific model instance managed by a runtime
+  // This might be called by the orchestrator or other services for external events
+  rpc InjectEvent (InjectEventRequest) returns (InjectEventResponse);
+
+  // Terminates a simulation instance
+  rpc TerminateSimulation (TerminateSimulationRequest) returns (TerminateSimulationResponse);
+}
+
+// Request to initialize a simulation instance
+message InitializeSimulationRequest {
+  string simulation_id = 1;
+  string kernel_instance_id = 2; // ID for this specific kernel instance
+  string scenario_config = 3; // Scenario details (topology, parameters)
+  // Potentially include runtime endpoint information if needed here
+}
+
+// Response after initializing a simulation
+message InitializeSimulationResponse {
+  string simulation_id = 1;
+  string kernel_instance_id = 2;
+  bool success = 3;
+  string message = 4;
+}
+
+// Request to run a simulation step
+message RunSimulationStepRequest {
+  string simulation_id = 1;
+  string kernel_instance_id = 2;
+  double run_until_time = 3; // Run simulation up to this time
+  // Or potentially run_for_duration, or run_n_events
+}
+
+// Response after running a simulation step
+message RunSimulationStepResponse {
+  string simulation_id = 1;
+  string kernel_instance_id = 2;
+  double current_simulation_time = 3;
+  bool completed = 4; // True if simulation finished normally
+  bool success = 5;
+  string message = 6;
+}
+
+// Request to inject an external event
+message InjectEventRequest {
+  string simulation_id = 1;
+  string kernel_instance_id = 2;
+  SimulationEvent event = 3;
+}
+
+// Response after injecting an event
+message InjectEventResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Request to terminate a simulation instance
+message TerminateSimulationRequest {
+  string simulation_id = 1;
+  string kernel_instance_id = 2;
+}
+
+// Response after terminating a simulation
+message TerminateSimulationResponse {
+  bool success = 1;
+  string message = 2;
+}

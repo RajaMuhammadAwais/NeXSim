@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package modern.proto;
+
+import "google/protobuf/any.proto"; // For generic event data
+import "shared_messages.proto"; // Import shared message definitions
+
+// Service definition for the Model Execution Runtime
+service RuntimeService {
+  // Called by Kernel to load a specific model instance
+  rpc LoadModel (LoadModelRequest) returns (LoadModelResponse);
+
+  // Called by Kernel to deliver an event to a specific model instance
+  rpc HandleEvent (HandleEventRequest) returns (HandleEventResponse);
+
+  // Called by Kernel (or Orchestrator) to unload/terminate a model instance
+  rpc UnloadModel (UnloadModelRequest) returns (UnloadModelResponse);
+}
+
+// Note: All message definitions have been moved to shared_messages.proto
+// This file now only contains the service definition

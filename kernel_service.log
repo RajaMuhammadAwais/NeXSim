@@ -1,0 +1,107 @@
+2025-06-09 23:56:57,951 - INFO - Kernel server started on port 50052
+2025-06-09 23:57:04,905 - INFO - Received InitializeSimulation request for sim_id: basic_ping_pong-2ee98609, kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133
+2025-06-09 23:57:04,907 - INFO - Parsing scenario config for kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133
+2025-06-09 23:57:04,907 - INFO - Successfully parsed scenario config for kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133
+2025-06-09 23:57:04,908 - DEBUG - Scenario config: {
+  "simulation_id": "basic_ping_pong",
+  "description": "A simple simulation with two nodes exchanging PING/PONG messages.",
+  "duration": 10.0,
+  "nodes": [
+    {
+      "model_id": "node_1",
+      "model_type": "python:BasicNodeModel",
+      "config": {
+        "neighbor": "node_2"
+      }
+    },
+    {
+      "model_id": "node_2",
+      "model_type": "python:BasicNodeModel",
+      "config": {
+        "neighbor": "node_1"
+      }
+    }
+  ],
+  "initial_events": [
+    {
+      "timestamp": 0.0,
+      "target_model_id": "node_1",
+      "event_type": "START"
+    }
+  ]
+}
+2025-06-09 23:57:04,908 - INFO - Scenario contains 2 nodes and 1 initial events
+2025-06-09 23:57:04,908 - INFO - Loading model node_1 of type python:BasicNodeModel
+2025-06-09 23:57:04,908 - INFO - Calling Runtime LoadModel for model_id: node_1
+2025-06-09 23:57:04,912 - INFO - LoadModel response for node_1: success=True, message=Model node_1 loaded successfully.
+2025-06-09 23:57:04,912 - INFO - Loading model node_2 of type python:BasicNodeModel
+2025-06-09 23:57:04,912 - INFO - Calling Runtime LoadModel for model_id: node_2
+2025-06-09 23:57:04,913 - INFO - LoadModel response for node_2: success=True, message=Model node_2 loaded successfully.
+2025-06-09 23:57:04,913 - INFO - Scheduling 1 initial events for kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133...
+2025-06-09 23:57:04,913 - INFO - Creating initial event with type_url: type.googleapis.com/modern.proto.models.STARTSignal
+2025-06-09 23:57:04,913 - INFO - Initial event details: time=0.0, target=node_1, type=START
+2025-06-09 23:57:04,913 - DEBUG - Scheduled event evt-0 for time 0.0, target=node_1
+2025-06-09 23:57:04,913 - INFO - Successfully scheduled initial event for node_1 at time 0.0
+2025-06-09 23:57:04,913 - INFO - Initial event queue for kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133: [(0.0, 'evt-0', event_id: "evt-0"
+target_model_id: "node_1"
+source_model_id: "KERNEL_INIT"
+event_data {
+  type_url: "type.googleapis.com/modern.proto.models.STARTSignal"
+}
+)]
+2025-06-09 23:57:04,913 - INFO - Next event scheduled at time 0.0 for node_1
+2025-06-09 23:57:04,913 - INFO - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 for simulation basic_ping_pong-2ee98609 initialized successfully.
+2025-06-09 23:57:04,933 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 10.0
+2025-06-09 23:57:04,933 - INFO - Starting RunSimulationStep loop for kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133. Current time: 0.0. Event queue size: 1
+2025-06-09 23:57:04,933 - INFO - Event queue before pop: [(0.0, 'evt-0', event_id: "evt-0"
+target_model_id: "node_1"
+source_model_id: "KERNEL_INIT"
+event_data {
+  type_url: "type.googleapis.com/modern.proto.models.STARTSignal"
+}
+)]
+2025-06-09 23:57:04,934 - INFO - Popped event evt-0 with time 0.0. Current sim time: 0.0
+2025-06-09 23:57:04,934 - INFO - Advanced simulation time to 0.0. Processing event evt-0 for model node_1
+2025-06-09 23:57:04,934 - INFO - Sending event evt-0 to runtime localhost:50053 for model node_1
+2025-06-09 23:57:04,935 - INFO - Received HandleEvent response from runtime for event evt-0: Success=False, Generated Events=0
+2025-06-09 23:57:04,935 - ERROR - Runtime failed to handle event evt-0 for model node_1: Error handling event evt-0 in model node_1: module 'kernel_pb2' has no attribute 'SimulationEvent'. Bailing out.
+2025-06-09 23:57:04,935 - INFO - RunSimulationStep for kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 finished. Processed 0 events. Current time: 0.0, Status: FAILED
+2025-06-09 23:57:04,935 - INFO - Event queue after step: []
+2025-06-09 23:57:04,957 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:04,957 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:06,983 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:06,983 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:09,010 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:09,010 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:11,036 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:11,036 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:13,063 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:13,063 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:15,087 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:15,087 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:17,113 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:17,113 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:19,139 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:19,139 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:21,168 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:21,168 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:23,198 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:23,198 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:25,222 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:25,222 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:27,246 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:27,246 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:29,269 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:29,270 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:31,293 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:31,294 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:33,317 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:33,317 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:35,341 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:35,341 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:37,365 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:37,365 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:39,394 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:39,394 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).
+2025-06-09 23:57:41,417 - INFO - Received RunSimulationStep request for kernel_id: kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133, run until: 5.0
+2025-06-09 23:57:41,417 - WARNING - Kernel instance kernel-basic_ping_pong-2ee98609-e9ce1a43-1fa1-444a-a050-d3ffda306133 is not in a runnable state (FAILED).

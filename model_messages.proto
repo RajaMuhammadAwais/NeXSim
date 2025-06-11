@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package modern.proto.models;
+
+// Simple message for Ping/Pong example
+message PingPongData {
+  string message_content = 1; // e.g., "PING" or "PONG"
+  int32 sequence_number = 2; // Example field
+}
+

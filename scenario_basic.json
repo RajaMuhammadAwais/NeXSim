@@ -1,0 +1,29 @@
+{
+  "simulation_id": "basic_ping_pong",
+  "description": "A simple simulation with two nodes exchanging PING/PONG messages.",
+  "duration": 10.0,
+  "nodes": [
+    {
+      "model_id": "node_1",
+      "model_type": "python:BasicNodeModel",
+      "config": {
+        "neighbor": "node_2"
+      }
+    },
+    {
+      "model_id": "node_2",
+      "model_type": "python:BasicNodeModel",
+      "config": {
+        "neighbor": "node_1"
+      }
+    }
+  ],
+  "initial_events": [
+    {
+      "timestamp": 0.0,
+      "target_model_id": "node_1",
+      "event_type": "START" 
+    }
+  ]
+}
+
