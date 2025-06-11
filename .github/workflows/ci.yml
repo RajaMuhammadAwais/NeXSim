@@ -1,0 +1,92 @@
+name: MODERN Simulator CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & Test Services
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.16
+        options: --privileged
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        pip install grpcio grpcio-tools pytest
+
+    - name: Compile Protobufs
+      run: |
+        python -m grpc_tools.protoc -Iproto \
+          --python_out=./orchestrator --grpc_python_out=./orchestrator proto/orchestrator.proto
+        python -m grpc_tools.protoc -Iproto \
+          --python_out=./kernel --grpc_python_out=./kernel proto/kernel.proto
+        python -m grpc_tools.protoc -Iproto \
+          --python_out=./runtime --grpc_python_out=./runtime proto/runtime.proto
+
+    - name: Run Unit Tests
+      run: pytest tests/unit
+
+    - name: Run Integration Tests
+      run: pytest tests/integration
+
+  docker:
+    name: Dockerize Services
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build & Push Orchestrator Image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/orchestrator:latest -f Dockerfile.orchestrator .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/orchestrator:latest
+
+    - name: Build & Push Kernel Image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/kernel:latest -f Dockerfile.kernel .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/kernel:latest
+
+    - name: Build & Push Runtime Image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/runtime:latest -f Dockerfile.runtime .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/runtime:latest
+
+  docs:
+    name: Generate & Deploy Docs
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Generate Docs
+      run: |
+        pip install mkdocs
+        mkdocs build
+
+    - name: Deploy Docs to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
