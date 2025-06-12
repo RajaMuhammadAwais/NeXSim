@@ -78,3 +78,4 @@ tox/
 
 # Ignore compiled WASM if applicable
 *.wasm
+.log
