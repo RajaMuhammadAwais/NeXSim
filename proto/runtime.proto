@@ -1,21 +1,20 @@
 syntax = "proto3";
 
-package modern.proto;
+// ✅ Use a simple, clean package name for ease of Python importing
+package runtime;
 
-import "google/protobuf/any.proto"; // For generic event data
-import "shared_messages.proto"; // Import shared message definitions
+// ✅ Import core and shared proto dependencies
+import "google/protobuf/any.proto";
+import "shared_messages.proto";  // This must exist in the proto path when compiling
 
-// Service definition for the Model Execution Runtime
+// ✅ Service definition for model runtime
 service RuntimeService {
-  // Called by Kernel to load a specific model instance
-  rpc LoadModel (LoadModelRequest) returns (LoadModelResponse);
+  // Load a model instance into this runtime
+  rpc LoadModel (shared.LoadModelRequest) returns (shared.LoadModelResponse);
 
-  // Called by Kernel to deliver an event to a specific model instance
-  rpc HandleEvent (HandleEventRequest) returns (HandleEventResponse);
+  // Handle a simulation event
+  rpc HandleEvent (shared.HandleEventRequest) returns (shared.HandleEventResponse);
 
-  // Called by Kernel (or Orchestrator) to unload/terminate a model instance
-  rpc UnloadModel (UnloadModelRequest) returns (UnloadModelResponse);
+  // Unload a model instance from memory
+  rpc UnloadModel (shared.UnloadModelRequest) returns (shared.UnloadModelResponse);
 }
-
-// Note: All message definitions have been moved to shared_messages.proto
-// This file now only contains the service definition
