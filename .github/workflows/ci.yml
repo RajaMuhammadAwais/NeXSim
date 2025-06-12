@@ -40,7 +40,7 @@ jobs:
     - name: 🧪 Run unit tests
       run: |
         echo "Running Python unit tests..."
-        python -m unittest discover -s . -p "test_*.py" -v
+        PYTHONPATH=. python -m unittest discover -s . -p "test_*.py" -v
 
     - name: 🗂️ Upload logs (for debugging)
       if: always()
