@@ -17,7 +17,7 @@ jobs:
     - name: 🐍 Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # Adjust as needed
+        python-version: '3.10'
 
     - name: 📦 Install dependencies
       run: |
@@ -25,12 +25,16 @@ jobs:
         pip install grpcio grpcio-tools
         pip install -r requirements.txt || echo "No requirements.txt found."
 
-    - name: 🧬 Compile all .proto files recursively
+    - name: 🧬 Compile all .proto files from /proto
       run: |
         echo "Compiling .proto files..."
-        for file in $(find . -name "*.proto"); do
+        for file in $(find ./proto -name "*.proto"); do
           echo "Compiling $file"
-          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. "$file"
+          python -m grpc_tools.protoc \
+            -Iproto \
+            --python_out=. \
+            --grpc_python_out=. \
+            "$file"
         done
 
     - name: 🧪 Run unit tests
