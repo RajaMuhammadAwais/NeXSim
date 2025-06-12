@@ -25,9 +25,11 @@ jobs:
         pip install grpcio grpcio-tools
         pip install -r requirements.txt || echo "No requirements.txt found."
 
-    - name: 🧬 Compile .proto files
+    - name: 🧬 Compile all .proto files recursively
       run: |
-        for file in *.proto; do
+        echo "Compiling .proto files..."
+        for file in $(find . -name "*.proto"); do
+          echo "Compiling $file"
           python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. "$file"
         done
 
@@ -42,4 +44,4 @@ jobs:
       with:
         name: service-logs
         path: |
-          *.log
+          **/*.log
