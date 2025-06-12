@@ -29,8 +29,7 @@ def test_kernel_service():
             grpc.channel_ready_future(channel).result(timeout=5)
             logging.info("Successfully connected to Kernel service")
         except grpc.FutureTimeoutError:
-            logging.error("Timeout waiting for Kernel service to be ready")
-            return False
+            raise AssertionError("Timeout waiting for Kernel service to be ready")
         
         # Create stub
         stub = kernel_pb2_grpc.KernelServiceStub(channel)
@@ -80,21 +79,18 @@ def test_kernel_service():
                 term_response = stub.TerminateSimulation(term_request)
                 logging.info(f"Received TerminateSimulation response: success={term_response.success}, message={term_response.message}")
                 
-                return True
+
             else:
                 logging.error(f"Kernel service initialization failed: {init_response.message}")
-                return False
+                raise AssertionError(f"Kernel service initialization failed: {init_response.message}")
                 
         except grpc.RpcError as e:
-            logging.error(f"gRPC error calling Kernel service: {e.code()} - {e.details()}")
-            return False
+            raise AssertionError(f"gRPC error calling Kernel service: {e.code()} - {e.details()}")
         except Exception as e:
-            logging.error(f"Unexpected error testing Kernel service: {e}", exc_info=True)
-            return False
+            raise AssertionError(f"Unexpected error testing Kernel service: {e}")
             
     except Exception as e:
-        logging.error(f"Error in test_kernel_service: {e}", exc_info=True)
-        return False
+        raise AssertionError(f"Error in test_kernel_service: {e}")
     finally:
         if 'channel' in locals():
             channel.close()
